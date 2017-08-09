@@ -19,6 +19,8 @@ parser.add_argument("variable_plot3", nargs='?', default="check_string_for_empty
 parser.add_argument("variable_plot4", nargs='?', default="check_string_for_empty")
 args = parser.parse_args()
 
+mpl.rcParams.update({'font.size': 36})
+
 if args.bag_num == '1':
     print 'Please wait! Executing script'
     bags = 1
@@ -28,20 +30,18 @@ elif args.bag_num == '2':
 elif args.bag_num == '3':
     print 'Please wait! Executing script'
     bags = 3
-elif args.bag_num == '4':
-    print 'Please wait! Executing script'
-    bags = 4
 else:
-    sys.exit("Error! Not a valid argument. Please enter 1 or 2 or 3 or 4")
+    sys.exit("Error! Not a valid argument. Please enter 1 or 2 or 3")
 
 bag_name = []
-
-mpl.rcParams.update({'font.size': 36})
 
 
 # Loop for number of desired graphs
 for i in range(bags):
 	bag_name.append(easygui.fileopenbox())
+
+fig = plt.figure()
+st = fig.suptitle("Comparing estimated position and real position", fontsize="x-large")
 
 
 for i in range(bags):
@@ -114,19 +114,18 @@ for i in range(bags):
 			plot2 = z_Vicon_adj
 		axis = args.variable_plot1
 
-		fig_1=plt.subplot(1, 1, i+1)
+		fig_1 = fig.add_subplot(1, 1, 1)
 		fig_1.grid(True, lw = 2, ls = '--', c = '.75')
 		fig_1.plot(time_Flight, plot1,linewidth=2, c='blue',label='Estimated Position')
 		fig_1.plot(time_Flight, plot2,linewidth=2, c='red',label='Actual Position')
-		fig_1.set_title('Comparing estimated posotion and real position', fontsize=70, y=1.5)
 		fig_1.set_xlabel('time (s)', fontsize=50)
 		fig_1.set_ylabel(axis + '-position (m)', fontsize=50)
 		fig_1.legend(loc='best')
+		fig_1.legend(loc='best')
 
 	elif bags == 2:
-		fig_1=plt.subplot(2, 1, i+1)
+		
 		if i == 0:
-			fig_1.set_title('Comparing estimated posotion and real position', fontsize=70)
 			if args.variable_plot1 == 'x':
 				plot1 = x_pos
 				plot2 = x_Vicon_adj
@@ -150,17 +149,17 @@ for i in range(bags):
 				plot2 = z_Vicon_adj
 			axis = args.variable_plot2
 
-		
+		fig_1 = fig.add_subplot(2, 1, i+1)
 		fig_1.grid(True, lw = 2, ls = '--', c = '.75')
 		fig_1.plot(time_Flight, plot1,linewidth=2, c='blue',label='Estimated Position')
 		fig_1.plot(time_Flight, plot2,linewidth=2, c='red',label='Actual Position')
 		fig_1.set_xlabel('time (s)', fontsize=50)
 		fig_1.set_ylabel(axis + '-position (m)', fontsize=50)
 		fig_1.legend(loc='best')
-	else:
-		fig_1=plt.subplot(2, 2, i+1)
+
+	elif bags == 3:
+		
 		if i == 0:
-			fig_1.set_title('Comparing estimated posotion and real position', fontsize=70)
 			if args.variable_plot1 == 'x':
 				plot1 = x_pos
 				plot2 = x_Vicon_adj
@@ -196,25 +195,12 @@ for i in range(bags):
 				plot2 = z_Vicon_adj
 			axis = args.variable_plot3
 
-		if i == 3:
-			if args.variable_plot4 == 'x':
-				plot1 = x_pos
-				plot2 = x_Vicon_adj
-			elif args.variable_plot4 == 'y':
-				plot1 = y_pos
-				plot2 = y_Vicon_adj
-			elif args.variable_plot4 == 'z':
-				plot1 = z_pos
-				plot2 = z_Vicon_adj
-			axis = args.variable_plot4
-
-		
+		fig_1 = fig.add_subplot(3, 1, i+1)
 		fig_1.grid(True, lw = 2, ls = '--', c = '.75')
 		fig_1.plot(time_Flight, plot1,linewidth=2, c='blue',label='Estimated Position')
 		fig_1.plot(time_Flight, plot2,linewidth=2, c='red',label='Actual Position')
 		fig_1.set_xlabel('time (s)', fontsize=50)
 		fig_1.set_ylabel(axis + '-position (m)', fontsize=50)
 		fig_1.legend(loc='best')
-
 
 plt.show()
