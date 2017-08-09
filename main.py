@@ -100,7 +100,7 @@ for i in range(bags):
 		y_Vicon_adj.append(y_Vicon[time_match])
 		z_Vicon_adj.append(z_Vicon[time_match])
 
-	print str((float(i+1)/float(bags))*100.0) + "% compleated"
+	print str((float(i+1)/float(bags))*100.0) + "% Compleated"
 
 	if bags == 1:
 		if args.variable_plot1 == 'x':
